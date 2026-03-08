@@ -47,9 +47,19 @@ export async function POST(request: NextRequest) {
       process.env.RESEND_API_KEY;
 
     if (!canSend) {
-      console.error("[Cita] GMAIL_USER/GMAIL_APP_PASSWORD o RESEND_API_KEY no configurados. Configure .env.local según .env.example");
+      const hint =
+        typeof process.env.VERCEL === "string"
+          ? " Añada GMAIL_USER + GMAIL_APP_PASSWORD o RESEND_API_KEY en Vercel → Settings → Environment Variables."
+          : " Configure GMAIL_USER y GMAIL_APP_PASSWORD o RESEND_API_KEY en .env.local (copie desde .env.example).";
+      console.error("[Cita] Email no configurado.", hint);
       return NextResponse.json(
-        { error: "El envío de correo no está disponible. Por favor, contacte al negocio por teléfono." },
+        {
+          error:
+            "El envío de correo no está configurado." +
+            hint +
+            " Mientras tanto, contacte al negocio por teléfono: " +
+            SITE.phone,
+        },
         { status: 503 }
       );
     }

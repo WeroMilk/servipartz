@@ -72,13 +72,20 @@ async function sendWithGmail(options: SendEmailOptions): Promise<boolean> {
   }
 }
 
+function getResendFrom(): string {
+  const email = process.env.RESEND_FROM_EMAIL?.trim();
+  const name = process.env.RESEND_FROM_NAME?.trim() || "Servipartz";
+  if (email) return `${name} <${email}>`;
+  return "Servipartz <onboarding@resend.dev>";
+}
+
 async function sendWithResend(options: SendEmailOptions): Promise<boolean> {
   const key = process.env.RESEND_API_KEY;
   if (!key) return false;
 
   const from = options.fromName
-    ? `${options.fromName} <onboarding@resend.dev>`
-    : "Servipartz <onboarding@resend.dev>";
+    ? `${options.fromName} <${process.env.RESEND_FROM_EMAIL?.trim() || "onboarding@resend.dev"}>`
+    : getResendFrom();
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",

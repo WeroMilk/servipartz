@@ -50,9 +50,11 @@ Si no configuras Gmail, puedes usar **Resend**:
 
 | Variable | Uso |
 |----------|-----|
-| `RESEND_API_KEY` | API key de [Resend](https://resend.com). Verifica tu dominio o usa `onboarding@resend.dev` en pruebas. |
+| `RESEND_API_KEY` | API key de [Resend](https://resend.com) (obligatoria para Resend). |
+| `RESEND_FROM_EMAIL` | (Opcional) Correo desde el que enviar, ej. `notificaciones@tudominio.com`. Para enviar a cualquier destinatario debes [verificar tu dominio en Resend](https://resend.com/domains). Sin esto se usa `onboarding@resend.dev` (solo pruebas). |
+| `RESEND_FROM_NAME` | (Opcional) Nombre del remitente; por defecto "Servipartz". |
 
-**Importante:** Si no configuras ni Gmail ni Resend, al enviar una cotización o cita la API responderá con error 503 y el usuario verá un mensaje indicando que contacte por teléfono.
+**Importante:** Para que el envío de correo funcione debes configurar **una** de las dos opciones (Gmail o Resend) en `.env.local` en local y en **Vercel → Project → Settings → Environment Variables** en producción. Si no está configurado, la API devuelve 503 y se indica al usuario que contacte por teléfono.
 
 ### Firebase (opcional)
 
