@@ -43,7 +43,7 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary-700/30 via-transparent to-primary-700/50" />
           </div>
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-0 pt-5 sm:pt-10 lg:pt-24 pb-8 sm:pb-24 lg:pb-28 flex flex-col items-center lg:items-stretch justify-start lg:justify-between lg:flex-row lg:gap-16">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-0 pt-5 sm:pt-10 lg:pt-24 pb-14 sm:pb-24 lg:pb-28 flex flex-col items-center lg:items-stretch justify-start lg:justify-between lg:flex-row lg:gap-16">
           {/* Texto del hero: en móvil menos padding y flujo natural */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -159,9 +159,9 @@ export default function HomePage() {
       <section className="py-16 sm:py-24 bg-slate-50/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-xl border border-slate-200/80 bg-white overflow-hidden">
-            <div className="grid lg:grid-cols-5 gap-0">
+            <div className="grid lg:grid-cols-5 gap-0 lg:items-stretch">
               {/* Columna izquierda: datos + horario */}
-              <div className="lg:col-span-2 p-6 sm:p-8 flex flex-col justify-center">
+              <div className="lg:col-span-2 p-6 sm:p-8 flex flex-col justify-center min-h-0">
                 <h2 className="text-xl font-semibold text-slate-900">Visítanos</h2>
                 <p className="mt-2 text-sm text-slate-500">
                   Av. José San Healy 385, Olivares, 83180 Hermosillo, Son.
@@ -193,8 +193,9 @@ export default function HomePage() {
                   </ul>
                 </div>
               </div>
-              {/* Mapa Google */}
-              <div className="lg:col-span-3 h-64 sm:h-72 lg:h-80 min-h-[240px] relative overflow-hidden mt-4 lg:mt-0 lg:rounded-r-xl">
+              {/* Mapa Google — centrado verticalmente en desktop */}
+              <div className="lg:col-span-3 h-64 sm:h-72 min-h-[240px] mt-4 lg:mt-0 lg:min-h-0 lg:flex lg:items-center lg:justify-center lg:p-6 lg:rounded-r-xl">
+                <div className="w-full h-full lg:h-80 lg:max-h-[360px] relative overflow-hidden lg:rounded-lg">
                 <iframe
                   title="Ubicación Servipartz"
                   src={MAPS_EMBED}
@@ -206,6 +207,7 @@ export default function HomePage() {
                   referrerPolicy="no-referrer-when-downgrade"
                   className="w-full h-full object-cover"
                 />
+                </div>
               </div>
             </div>
           </div>
