@@ -1,0 +1,104 @@
+import Link from "next/link";
+import Image from "next/image";
+import { Phone, MapPin, Clock } from "lucide-react";
+import { MAPS_LINK, SITE, GOOGLE_REVIEWS_LINK } from "@/lib/constants";
+
+const horario = [
+  { dia: "Lunes a Viernes", hora: "8:00 a.m. – 6:30 p.m." },
+  { dia: "Sábado", hora: "8:00 a.m. – 2:00 p.m." },
+  { dia: "Domingo", hora: "Cerrado" },
+];
+
+const links = [
+  { href: "/", label: "Inicio" },
+  { href: "/catalogo", label: "Catálogo" },
+  { href: "/seminuevos", label: "Seminuevos" },
+  { href: "/cotizacion", label: "Cotización" },
+  { href: "/agendar-cita", label: "Agendar cita" },
+];
+
+export function Footer() {
+  return (
+    <footer className="bg-black border-t border-white/10 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="flex flex-col gap-4 items-start">
+            <span className="relative block h-9 w-[8.2rem] -ml-1">
+              <Image
+                src="/logo.png"
+                alt="Servipartz"
+                fill
+                className="object-contain object-left"
+                sizes="131px"
+              />
+            </span>
+            <p className="text-sm text-white/90 max-w-xs">
+              Proveedor de repuestos de electrodomésticos en Hermosillo. Encuéntranos, cotiza y agenda servicio técnico.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-white mb-4">Enlaces</h3>
+            <ul className="space-y-2.5">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-white hover:text-white/80 transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-white mb-4">Contacto</h3>
+            <ul className="space-y-3 text-sm text-white">
+              <li>
+                <a href="tel:6624049965" className="flex items-center gap-2 hover:text-white/80 transition-colors">
+                  <Phone className="h-4 w-4 shrink-0" />
+                  662 404 9965
+                </a>
+              </li>
+              <li>
+                <a
+                  href={MAPS_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 text-red-500 hover:text-red-400 transition-colors"
+                >
+                  <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
+                  {SITE.address}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-white mb-4">Horario</h3>
+            <ul className="space-y-2.5 text-sm text-white">
+              {horario.map((item) => (
+                <li key={item.dia} className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 shrink-0 text-white" />
+                  <span>{item.dia}: {item.hora}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-white">
+          <p>© {new Date().getFullYear()} Servipartz. Todos los derechos reservados.</p>
+          <a
+            href={GOOGLE_REVIEWS_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors"
+          >
+            <span className="text-amber-500">★</span>
+            {SITE.googleReviews} opiniones en Google
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}
