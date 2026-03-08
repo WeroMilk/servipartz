@@ -11,7 +11,12 @@ const plusJakarta = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
+
 export const metadata: Metadata = {
+  metadataBase: baseUrl ? new URL(baseUrl) : undefined,
   title: "Servipartz | Electrodomesticos",
   description:
     "Proveedor de repuestos de electrodomésticos en Hermosillo. Catálogo amplio, cotizaciones, servicio técnico a domicilio. Refrigeradores, licuadoras, soldadura y más.",
@@ -22,6 +27,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Servipartz | Electrodomesticos",
     description: "Encuéntranos, cotiza y agenda servicio técnico. Hermosillo, Sonora.",
+    images: [{ url: "/og-image.png", width: 1200, height: 1200, alt: "Servipartz" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Servipartz | Electrodomesticos",
+    description: "Encuéntranos, cotiza y agenda servicio técnico. Hermosillo, Sonora.",
+    images: ["/og-image.png"],
   },
 };
 
