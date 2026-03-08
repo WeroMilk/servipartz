@@ -3,13 +3,16 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { SITE } from "@/lib/constants";
 
 type Message = { role: "user" | "assistant"; content: string };
+
+const TALLER_HORARIO = "Lun–Vie 8:00–18:30, Sáb 8:00–14:00. Dom cerrado.";
 
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
   content:
-    "¿Qué tal compa? 👋 Aquí el técnico de Servipartz, en Hermosillo. Cuéntame qué equipo traes y qué le pasa (ej: \"mi lavadora no gira el centro\", \"el refri no enfría\"). Te voy guiando con qué revisar y al rato te digo la solución; si necesitas la pieza o un técnico a domicilio, te lo armamos. ¿Qué tienes?",
+    "¿Qué tal compa? 👋 Aquí el técnico de Servipartz, en Hermosillo. Cuéntame qué equipo traes y qué le pasa (ej: \"mi lavadora no gira el centro\", \"el refri no enfría\"). Te voy guiando con qué revisar; si sacamos la pieza te digo cómo cotizarla o que vaya un técnico. Si no quedamos seguros, te ofrezco visita a domicilio ($300, te los descontamos si reparas) o traerlo al taller. ¿Qué tienes? 🛠️",
 };
 
 export function ChatbotWidget() {
@@ -173,7 +176,19 @@ async function getExpertReply(userMessage: string, allMessages: Message[]): Prom
   return getLocalExpertReply(allMessages);
 }
 
-const CIERRE_SERVIPARTZ = " Puedes cotizar la pieza aquí en la página o te consigo un técnico a domicilio: mano de obra aprox $300-$500 más la pieza. Tú dime compa, aquí estaré esperando 😊 Tel. 662 404 9965.";
+const CIERRE_PIEZA =
+  " Puedes cotizar la pieza en la página; si prefieres que un técnico vaya a instalarla, mano de obra aprox $300-$500 más la pieza. También tenemos guía paso a paso por $49 si quieres instalarlo tú. Tú dime compa, aquí estaré 😊 Tel. " +
+  SITE.phone +
+  ".";
+
+const CIERRE_SIN_RESOLVER =
+  " Si con eso no quedamos seguros, tienes dos opciones: 1) Visita a domicilio por $300 (si aceptas la reparación con nosotros, te descontamos esos $300 del total). 2) Traer el equipo a nuestro taller en " +
+  SITE.address +
+  " — " +
+  TALLER_HORARIO +
+  " — lo revisamos sin costo. ¿Cuál te late? Tel. " +
+  SITE.phone +
+  ".";
 
 function getLocalExpertReply(messages: Message[]): string {
   const context = messages.map((m) => m.content).join(" ").toLowerCase();
@@ -186,7 +201,7 @@ function getLocalExpertReply(messages: Message[]): string {
   if (has("lavadora")) {
     // Si ya dio seguimiento (quemado, revisé, creo que es, transmisión, correa, etc.) → dar solución y cierre
     if (userReportedBack("quemado", "quemada", "revisé", "revisé y", "creo que es", "es la transmisión", "es la correa", "son los rodamientos", "está rota", "se ve mal", "encontré", "la correa está", "la transmisión")) {
-      return "Muy bien compa, con eso ya le atinamos 👍 La solución es cambiar esa pieza. En Servipartz la tenemos." + CIERRE_SERVIPARTZ;
+      return "Muy bien compa, con eso ya le atinamos 👍 La solución es cambiar esa pieza. En Servipartz la tenemos." + CIERRE_PIEZA;
     }
     if (has("no gira", "no centrifuga", "no lava bien", "no lava la ropa", "no lava", "tambor", "centro no gira", "lo del centro", "no gira lo del centro", "no lava bien la ropa")) {
       return "Compa, cuando no gira el tambor o no centrifuga puede ser transmisión, correa, rodamientos o amortiguadores. Revisa: 1) Si la correa está suelta o rota (por atrás), 2) Si el tambor suena a metal o hace ruido raro, 3) Si ves algo quemado o oliendo feo en la transmisión. Revisa eso y me dices qué ves, así afinamos 🔧";
@@ -206,7 +221,7 @@ function getLocalExpertReply(messages: Message[]): string {
   // ——— Refrigerador / nevera ———
   if (has("refrigerador", "refri", "nevera", "refrigeradora")) {
     if (userReportedBack("quemado", "revisé", "creo que es", "es el compresor", "es el capacitor", "relé", "no arranca")) {
-      return "Listo compa, con eso ya sabemos. La solución es cambiar esa pieza." + CIERRE_SERVIPARTZ;
+      return "Listo compa, con eso ya sabemos. La solución es cambiar esa pieza." + CIERRE_PIEZA;
     }
     if (has("no enfría", "no enfría bien", "no enfria")) {
       return "Compa, revisa: 1) Que la puerta cierre bien y el empaque no esté roto, 2) Que el condensador (rejilla atrás) no esté lleno de polvo, 3) Si el compresor (abajo atrás) arranca o hace ruido raro. Si no arranca o huele a quemado puede ser capacitor o relé. Revisa y me dices qué ves 👍";
@@ -217,7 +232,7 @@ function getLocalExpertReply(messages: Message[]): string {
   // ——— Licuadora ———
   if (has("licuadora")) {
     if (userReportedBack("quemado", "revisé", "es el motor", "huele feo")) {
-      return "Sí compa, cuando huele a quemado casi siempre es el motor. Lo tenemos." + CIERRE_SERVIPARTZ;
+      return "Sí compa, cuando huele a quemado casi siempre es el motor. Lo tenemos." + CIERRE_PIEZA;
     }
     if (has("no prende", "no enciende", "huele a quemado")) {
       return "Compa, si no prende o huele a quemado suele ser el motor. Revisa que el vaso esté bien puesto y que no haya nada atorado en las cuchillas. Si aun así huele a quemado o no gira, es el motor. Cuéntame qué ves 🔧";
@@ -231,32 +246,78 @@ function getLocalExpertReply(messages: Message[]): string {
   // ——— Microondas ———
   if (has("microondas", "microonda")) {
     if (has("no calienta", "no calienta bien")) {
-      return "Compa, cuando no calienta suele ser magnetrón, capacitor o diodo. Eso no lo abras tú, es peligroso. Lo mejor es que un técnico lo revise. Te consigo uno a domicilio: mano de obra aprox $300-$500 más la pieza. Tú dime, aquí estaré 😊 662 404 9965.";
+      return "Compa, cuando no calienta suele ser magnetrón, capacitor o diodo. Eso es alta tensión, no lo abras tú 🛠️ Lo mejor es que un técnico lo revise." + CIERRE_SIN_RESOLVER;
+    }
+    if (has("chispa", "chispas")) {
+      return "Si hace chispas por dentro puede ser suciedad o la mica (lámina que cubre las ondas) carbonizada. Limpia bien el interior; si la chispa sale de la mica, hay que cambiarla. Tenemos la pieza." + CIERRE_PIEZA;
     }
     if (has("no gira", "charola", "bandeja")) {
-      return "Si la charola no gira es el motor de la bandeja. Lo tenemos. Cotiza en la página o te consigo técnico." + CIERRE_SERVIPARTZ;
+      return "Si la charola no gira es el motor de la bandeja. Lo tenemos. Cotiza en la página o te consigo técnico." + CIERRE_PIEZA;
     }
     return "Compa, ¿no calienta o no gira la charola? Dime y te digo qué pieza es.";
   }
 
   // ——— Estufa ———
-  if (has("estufa")) {
-    return "Compa, revisa que haya gas y que los quemadores no estén tapados. Si el piloto no prende o no enciende, puede ser válvula o encendedor. Revisa eso y me dices qué hace. Tenemos quemadores y refacciones." + CIERRE_SERVIPARTZ;
+  if (has("estufa", "parrilla", "estufa de gas")) {
+    if (has("huele a gas", "olor a gas", "fuga de gas")) {
+      return "Compa, eso es serio 🛠️ Cierra la llave del gas, ventila y llama a un técnico de inmediato. Nosotros podemos agendar visita a domicilio ($300, te los descontamos si reparas) o puedes traer la estufa al taller si es transportable. Tel. " + SITE.phone + ".";
+    }
+    if (has("llama baja", "no sale llama", "no prende")) {
+      return "Puede ser orificios del quemador o la esprea tapados (a veces por comida). Destápalos con un alfiler y seca bien. Si es encendido eléctrico y no hay chispa, puede ser el módulo. Revisa y me dices." + CIERRE_PIEZA;
+    }
+    return "Compa, revisa que haya gas y que los quemadores no estén tapados. Si el piloto no prende puede ser válvula o encendedor. Revisa y me dices. Tenemos quemadores y refacciones." + CIERRE_PIEZA;
   }
 
   // ——— Aire acondicionado ———
   if (has("aire", "minisplit", "aire acondicionado", "ac")) {
     if (userReportedBack("revisé", "creo que es", "capacitor", "compresor")) {
-      return "Perfecto compa, con eso ya le atinamos. Esa pieza la tenemos." + CIERRE_SERVIPARTZ;
+      return "Perfecto compa, con eso ya le atinamos. Esa pieza la tenemos." + CIERRE_PIEZA;
     }
     return "Compa, si no enfría limpia filtros y la rejilla del condensador. Si no prende o hace ruido raro puede ser capacitor o compresor. Revisa y cuéntame qué ves. Tenemos refacciones 👍";
   }
 
+  // ——— Secadora ———
+  if (has("secadora")) {
+    if (has("no calienta", "aire frío")) {
+      return "Puede ser la resistencia (eléctrica), el encendido (gas) o un termostato de seguridad. Revisa que el filtro de pelusas esté limpio; si sigue igual, mejor que un técnico lo vea." + CIERRE_SIN_RESOLVER;
+    }
+    if (has("ruido", "tarda mucho")) {
+      return "Si hace ruido puede ser la banda del tambor o polea; si tarda mucho en secar, limpia el filtro de pelusas y el conducto de salida. Tenemos banda, rodamientos y refacciones." + CIERRE_PIEZA;
+    }
+    return "Compa, ¿no calienta, tarda mucho o hace ruido? Dime y te guío." + CIERRE_PIEZA;
+  }
+
+  // ——— Lavavajillas ———
+  if (has("lavavajillas", "lavavajilla")) {
+    return "Revisa que los filtros y los brazos aspersores estén limpios (destapa orificios con palillo). Si no desagua, revisa la manguera y la bomba. Si no calienta el agua puede ser la resistencia. Tenemos refacciones." + CIERRE_PIEZA;
+  }
+
+  // ——— Horno ———
+  if (has("horno")) {
+    return "Si no calienta revisa termostato y resistencias (arriba/abajo). Si la puerta no cierra bien puede ser el burlete. Revisa y me dices qué hace; tenemos resistencias, termostato y empaques." + CIERRE_PIEZA;
+  }
+
+  // ——— Cafetera ———
+  if (has("cafetera")) {
+    if (has("no calienta", "café frío", "muy lento")) {
+      return "Puede ser la resistencia o el termostato. Si el café sale frío o lento, a veces es sarro: descalcifica con vinagre blanco. Si sigue igual, la resistencia puede estar abierta." + CIERRE_PIEZA;
+    }
+    return "Compa, ¿no calienta, sale frío o tiene fuga? Dime y te digo qué revisar." + CIERRE_PIEZA;
+  }
+
+  // ——— Calentador / Boiler ———
+  if (has("calentador", "boiler", "calentador de agua")) {
+    if (has("gas", "piloto")) {
+      return "Si es de gas y no calienta, revisa que el piloto esté encendido y que haya gas. El termopar (sensor de llama) puede estar sucio o dañado. Si hay fuga por la válvula de seguridad, puede ser presión alta." + CIERRE_PIEZA;
+    }
+    return "Si es eléctrico revisa termostato y resistencia (a veces se quema por sarro). Si es gas, revisa piloto y termopar. Tenemos resistencias, termostatos, ánodo y válvulas." + CIERRE_PIEZA;
+  }
+
   // ——— Soldadura ———
   if (has("soldadura", "soldador")) {
-    return "Compa, en soldadora revisa conexiones, tierra y que el amperaje vaya con el electrodo. Si necesitas electrodos, careta o refacciones las tenemos. Cotiza en la página o llámanos al 662 404 9965 👍";
+    return "Compa, en soldadora revisa conexiones, tierra y que el amperaje vaya con el electrodo. Si necesitas electrodos, careta o refacciones las tenemos. Cotiza en la página o llámanos al " + SITE.phone + " 👍";
   }
 
   // Sin electrodoméstico detectado
-  return "Compa, cuéntame qué equipo es (lavadora, refri, licuadora, microondas, estufa, aire, etc.) y qué le pasa. Te voy guiando con qué revisar y al final te digo la solución o te consigo la pieza y hasta un técnico si lo necesitas 😊 662 404 9965.";
+  return "Compa, cuéntame qué equipo es (lavadora, refri, licuadora, microondas, estufa, secadora, cafetera, etc.) y qué le pasa. Te voy guiando con qué revisar; si no quedamos seguros te ofrezco visita a domicilio ($300 descontables si reparas) o traerlo al taller. ¿Qué tienes? 😊 " + SITE.phone;
 }

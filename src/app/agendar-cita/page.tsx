@@ -75,7 +75,7 @@ export default function AgendarCitaPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen bg-zinc-50 flex items-center justify-center px-4">
+      <div className="min-h-[calc(100svh-10rem)] bg-zinc-50 flex items-center justify-center px-4 py-8">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -103,7 +103,7 @@ export default function AgendarCitaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-[100svh] bg-zinc-50">
       <div className="bg-zinc-900 text-white pt-4 pb-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <Link

@@ -8,10 +8,12 @@ import { MOCK_PRODUCTS, type CatalogProduct } from "@/lib/catalog";
 import { useQuoteStore } from "@/store/quoteStore";
 import Link from "next/link";
 import Image from "next/image";
+import { ImageLightbox } from "@/components/ImageLightbox";
 
 export default function CatalogoPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const addItem = useQuoteStore((s) => s.addItem);
 
   const filtered = useMemo(() => {
@@ -31,7 +33,7 @@ export default function CatalogoPage() {
   }, [search, category]);
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-[100svh] bg-zinc-50">
       {/* Cabecera */}
       <div className="bg-zinc-900 text-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -137,6 +139,7 @@ export default function CatalogoPage() {
                       product={product}
                       index={i}
                       onAddToQuote={() => addItem(product)}
+                      onOpenImage={product.image ? () => setLightbox({ src: product.image!, alt: product.name }) : undefined}
                     />
                   ))}
                 </motion.ul>
@@ -157,6 +160,13 @@ export default function CatalogoPage() {
           </div>
         </div>
       </div>
+
+      <ImageLightbox
+        open={!!lightbox}
+        onClose={() => setLightbox(null)}
+        src={lightbox?.src ?? ""}
+        alt={lightbox?.alt ?? ""}
+      />
     </div>
   );
 }
@@ -165,10 +175,12 @@ function ProductCard({
   product,
   index,
   onAddToQuote,
+  onOpenImage,
 }: {
   product: CatalogProduct;
   index: number;
   onAddToQuote: () => void;
+  onOpenImage?: () => void;
 }) {
   const cat = CATEGORIES.find((c) => c.id === product.category);
 
@@ -179,8 +191,15 @@ function ProductCard({
       transition={{ delay: Math.min(index * 0.03, 0.2) }}
       className="group flex flex-col h-full rounded-xl border border-zinc-200 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-zinc-300 transition-all duration-200"
     >
-      {/* Imagen del producto o placeholder */}
-      <div className="relative h-36 shrink-0 bg-zinc-100 overflow-hidden">
+      {/* Imagen del producto o placeholder — clic para ver completa */}
+      <div
+        className={`relative h-36 shrink-0 bg-zinc-100 overflow-hidden ${onOpenImage ? "cursor-zoom-in" : ""}`}
+        onClick={onOpenImage}
+        onKeyDown={onOpenImage ? (e) => e.key === "Enter" && onOpenImage() : undefined}
+        role={onOpenImage ? "button" : undefined}
+        tabIndex={onOpenImage ? 0 : undefined}
+        aria-label={onOpenImage ? "Ver imagen completa" : undefined}
+      >
         {product.image ? (
           <Image
             src={product.image}

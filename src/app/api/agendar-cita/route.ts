@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/constants";
 import { sendEmail, escapeHtml } from "@/lib/email";
 
+export const runtime = "nodejs";
+
 interface Body {
   name: string;
   phone: string;
@@ -44,25 +46,22 @@ export async function POST(request: NextRequest) {
       (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) ||
       process.env.RESEND_API_KEY;
 
-    if (canSend) {
-      const ok = await sendEmail({
-        to: SITE.email,
-        subject: `Cita solicitada - ${safeName} - ${date} ${time}`,
-        html: emailHtml,
-        text: emailText,
-      });
-      if (!ok) {
-        return NextResponse.json({ error: "Error al enviar." }, { status: 500 });
-      }
-    } else {
-      console.log("[Cita] Sin Gmail ni Resend configurados. Datos:", {
-        name,
-        phone,
-        address,
-        date,
-        time,
-        message,
-      });
+    if (!canSend) {
+      console.error("[Cita] GMAIL_USER/GMAIL_APP_PASSWORD o RESEND_API_KEY no configurados. Configure .env.local según .env.example");
+      return NextResponse.json(
+        { error: "El envío de correo no está disponible. Por favor, contacte al negocio por teléfono." },
+        { status: 503 }
+      );
+    }
+
+    const ok = await sendEmail({
+      to: SITE.email,
+      subject: `Cita solicitada - ${safeName} - ${date} ${time}`,
+      html: emailHtml,
+      text: emailText,
+    });
+    if (!ok) {
+      return NextResponse.json({ error: "Error al enviar el correo. Verifique que Gmail (contraseña de aplicación) o Resend estén bien configurados." }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });

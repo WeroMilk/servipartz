@@ -11,9 +11,9 @@ const MAPS_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(SITE.addr
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-primary-700 md:bg-transparent">
-      {/* Hero - en móvil ocupa toda la pantalla; en desktop la sección azul abarca más */}
-      <section className="relative min-h-[100dvh] md:min-h-0 lg:min-h-[88vh] bg-primary-700 text-white overflow-hidden">
+    <div className="min-h-[100svh] bg-primary-700 md:bg-transparent">
+      {/* Hero - en móvil contenido fluido sin espacio vacío; en desktop la sección azul abarca más */}
+      <section className="relative min-h-0 md:min-h-0 lg:min-h-[88svh] bg-primary-700 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.12)_100%)]" />
         {/* Imagen del local - solo desktop, integrada con suavidad */}
         <div className="absolute inset-0 hidden lg:block pointer-events-none">
@@ -29,9 +29,9 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-l from-primary-700 via-primary-700/30 to-transparent" />
           </div>
         </div>
-        {/* Móvil: 1) hero 2) foto del negocio 3) espacio azul 4) texto 5) espacio azul */}
+        {/* Móvil: imagen + contenido bien distribuido sin márgenes excesivos */}
         <div className="lg:hidden w-full flex-shrink-0 relative overflow-hidden rounded-b-2xl">
-          <div className="w-full aspect-[16/10] max-h-52 relative">
+          <div className="w-full aspect-[16/10] max-h-44 relative">
             <Image
               src="/local-servipartz.png"
               alt=""
@@ -43,39 +43,39 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary-700/30 via-transparent to-primary-700/50" />
           </div>
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-0 md:min-h-0 pt-8 sm:pt-10 lg:pt-24 pb-12 sm:pb-24 lg:pb-28 flex flex-col items-center lg:items-stretch justify-center md:justify-start lg:flex-row lg:justify-between lg:gap-16">
-          {/* Texto del hero: espacio azul arriba (pt-8) y abajo (pb-12) en móvil */}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-0 pt-5 sm:pt-10 lg:pt-24 pb-8 sm:pb-24 lg:pb-28 flex flex-col items-center lg:items-stretch justify-start lg:justify-between lg:flex-row lg:gap-16">
+          {/* Texto del hero: en móvil menos padding y flujo natural */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="max-w-xl w-full text-center lg:text-left"
           >
-            <p className="text-xs lg:text-sm font-medium text-white/70 uppercase tracking-[0.2em] mb-5 lg:mb-6">
+            <p className="text-xs lg:text-sm font-medium text-white/70 uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-3 lg:mb-6">
               Reparación y servicio técnico
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
               Reparación de electrodomésticos en Hermosillo, Son.
             </h1>
-            <p className="mt-5 lg:mt-6 text-base lg:text-lg text-white/85 leading-relaxed max-w-lg mx-auto lg:mx-0">
+            <p className="mt-4 lg:mt-6 text-sm sm:text-base lg:text-lg text-white/85 leading-relaxed max-w-lg mx-auto lg:mx-0">
               Catálogo amplio, cotizaciones rápidas y servicio técnico a domicilio. Desde soldaduras hasta reparación y mantenimiento de refrigeraciones industriales.
             </p>
-            <div className="mt-8 lg:mt-10 flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start">
+            <div className="mt-6 lg:mt-10 flex flex-col sm:flex-row flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start">
               <Link
                 href="/catalogo"
-                className="inline-flex items-center gap-2 rounded-full bg-white text-primary-700 border-2 border-primary-600 px-5 py-2.5 lg:px-6 lg:py-3 text-sm lg:text-base font-medium hover:bg-white/95 transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-primary-700 border-2 border-primary-600 px-5 py-3 lg:px-6 lg:py-3 text-sm lg:text-base font-medium hover:bg-white/95 transition-colors"
               >
                 Ver catálogo
                 <ArrowRight className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
               </Link>
               <Link
                 href="/cotizacion"
-                className="inline-flex items-center rounded-full border-2 border-primary-400 px-5 py-2.5 lg:px-6 lg:py-3 text-sm lg:text-base font-medium text-white hover:bg-white/10 hover:border-white/80 transition-colors"
+                className="inline-flex items-center justify-center rounded-full border-2 border-primary-400 px-5 py-3 lg:px-6 lg:py-3 text-sm lg:text-base font-medium text-white hover:bg-white/10 hover:border-white/80 transition-colors"
               >
                 Solicitar cotización
               </Link>
             </div>
-            <div className="mt-8 lg:mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-1 text-sm lg:text-base text-white/60">
+            <div className="mt-6 lg:mt-10 flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-x-6 sm:gap-y-1 text-sm lg:text-base text-white/60">
               <a
                 href={GOOGLE_REVIEWS_LINK}
                 target="_blank"
@@ -104,8 +104,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Servicios - tarjetas minimalistas: en desktop margen negativo para reducir espacio arriba */}
-      <section className="pt-16 sm:pt-24 lg:pt-40 lg:-mt-10 pb-16 sm:pb-24 bg-white">
+      {/* Servicios - tarjetas minimalistas: en desktop margen negativo para reducir espacio arriba; móvil con menos pt para subir el bloque */}
+      <section className="pt-10 sm:pt-24 lg:pt-40 lg:-mt-10 pb-16 sm:pb-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl mb-14">
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">

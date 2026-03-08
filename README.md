@@ -29,20 +29,50 @@ Abre [http://localhost:3000](http://localhost:3000).
 
 ## Variables de entorno (producción / Vercel)
 
-Crea un archivo `.env.local` en desarrollo o configura en Vercel:
+Crea un archivo `.env.local` en la raíz del proyecto (copia de `.env.example`) y rellena las variables. En Vercel, configúralas en el proyecto.
+
+### Correo (Gmail recomendado)
+
+Para que **cotización** y **agendar cita** envíen correos reales necesitas **una** de estas dos opciones:
 
 | Variable | Uso |
 |----------|-----|
-| `RESEND_API_KEY` | Envío de correos (cotización y cita). Sin esto, las solicitudes se registran en logs pero no se envían emails. |
-| `OPENAI_API_KEY` | (Opcional) Chatbot con IA. Sin esto, el chatbot usa respuestas locales por categoría. |
+| `GMAIL_USER` | Tu correo de Gmail (ej: `tunegocio@gmail.com`). |
+| `GMAIL_APP_PASSWORD` | Contraseña de aplicación de Gmail (no tu contraseña normal). |
 
-Para correos con [Resend](https://resend.com): crea una cuenta, verifica tu dominio (o usa `onboarding@resend.dev` en pruebas) y añade la API key en Vercel.
+**Cómo obtener la contraseña de aplicación (Gmail):**
+1. Activa [verificación en 2 pasos](https://myaccount.google.com/signinoptions/two-step-verification) en tu cuenta de Google.
+2. Entra en [Contraseñas de aplicación](https://myaccount.google.com/apppasswords).
+3. Crea una contraseña para "Correo" / "Otro" (nombre ej: Servipartz).
+4. Copia la contraseña de 16 caracteres y pégala en `GMAIL_APP_PASSWORD` en `.env.local`.
+
+Si no configuras Gmail, puedes usar **Resend**:
+
+| Variable | Uso |
+|----------|-----|
+| `RESEND_API_KEY` | API key de [Resend](https://resend.com). Verifica tu dominio o usa `onboarding@resend.dev` en pruebas. |
+
+**Importante:** Si no configuras ni Gmail ni Resend, al enviar una cotización o cita la API responderá con error 503 y el usuario verá un mensaje indicando que contacte por teléfono.
+
+### Firebase (opcional)
+
+Para funciones que usen Firebase en el futuro (auth, etc.):
+
+| Variable | Uso |
+|----------|-----|
+| `NEXT_PUBLIC_FIREBASE_*` | Configuración del proyecto en [Firebase Console](https://console.firebase.google.com) (API Key, Auth Domain, Project ID, etc.). |
+
+### Otros
+
+| Variable | Uso |
+|----------|-----|
+| `OPENAI_API_KEY` | (Opcional) Chatbot con IA. Sin esto, el chatbot usa respuestas locales por categoría. |
 
 ## Deploy en Vercel
 
 1. Sube el proyecto a GitHub.
 2. En [vercel.com](https://vercel.com) importa el repositorio.
-3. Añade las variables de entorno (`RESEND_API_KEY` y opcionalmente `OPENAI_API_KEY`).
+3. Añade las variables de entorno: **Gmail** (`GMAIL_USER`, `GMAIL_APP_PASSWORD`) o **Resend** (`RESEND_API_KEY`), y opcionalmente `OPENAI_API_KEY` y Firebase.
 4. Deploy automático en cada push.
 
 ## Estructura

@@ -79,12 +79,27 @@ export function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden absolute top-full left-0 right-0 border-t border-white/10 bg-black"
+            initial={{ height: 0, overflow: "hidden" }}
+            animate={{ height: "auto", overflow: "hidden" }}
+            exit={{ height: 0, overflow: "hidden" }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-full left-0 right-0 border-t border-white/10"
           >
-            <nav className="flex flex-col py-3 px-2">
+            {/* Fondo primero, luego el texto */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="bg-black absolute inset-0"
+            />
+            <motion.nav
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15, delay: 0.08 }}
+              className="flex flex-col py-3 px-2 relative z-10"
+            >
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -112,7 +127,7 @@ export function Header() {
                 <MapPin className="h-3.5 w-3.5" />
                 Cómo llegar
               </a>
-            </nav>
+            </motion.nav>
           </motion.div>
         )}
       </AnimatePresence>

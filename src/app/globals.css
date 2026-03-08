@@ -25,7 +25,7 @@ html {
 body {
   color: var(--muted);
   background: #fafafa;
-  min-height: 100vh;
+  min-height: 100svh; /* svh evita que la pantalla salte al mostrar/ocultar la barra de direcciones en móvil */
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 

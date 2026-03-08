@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/constants";
 import { sendEmail, escapeHtml } from "@/lib/email";
 
+export const runtime = "nodejs";
+
 interface QuoteItem {
   product: { id: string; name: string; sku?: string; category: string };
   quantity: number;
@@ -55,34 +57,33 @@ export async function POST(request: NextRequest) {
       (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) ||
       process.env.RESEND_API_KEY;
 
-    if (canSend) {
-      const [okToStore, okToClient] = await Promise.all([
-        sendEmail({
-          to: SITE.email,
-          replyTo: email,
-          subject: `Cotización de ${safeName} - Servipartz`,
-          html: emailHtml,
-          text: `Nueva cotización - ${safeName}\nEmail: ${safeEmail}${safePhone ? `\nTel: ${safePhone}` : ""}${safeMessage ? `\nComentarios: ${safeMessage}` : ""}\n\nProductos:\n${list}`,
-        }),
-        sendEmail({
-          to: email,
-          subject: "Cotización recibida - Servipartz",
-          html: `<p>Hola ${safeName},</p><p>${clientMessage}</p><p>Saludos,<br/>Servipartz</p>`,
-          text: `Hola ${safeName},\n\n${clientMessage}\n\nSaludos,\nServipartz`,
-        }),
-      ]);
-      if (!okToStore) {
-        return NextResponse.json({ error: "Error al enviar correo." }, { status: 500 });
-      }
-      // okToClient se ignora: el cliente ya ve "enviado"; si falla el de confirmación se loguea
-    } else {
-      console.log("[Cotización] Sin Gmail ni Resend configurados. Datos recibidos:", {
-        name,
-        email,
-        phone,
-        items: list,
-      });
+    if (!canSend) {
+      console.error("[Cotización] GMAIL_USER/GMAIL_APP_PASSWORD o RESEND_API_KEY no configurados. Configure .env.local según .env.example");
+      return NextResponse.json(
+        { error: "El envío de correo no está disponible. Por favor, contacte al negocio por teléfono." },
+        { status: 503 }
+      );
     }
+
+    const [okToStore, okToClient] = await Promise.all([
+      sendEmail({
+        to: SITE.email,
+        replyTo: email,
+        subject: `Cotización de ${safeName} - Servipartz`,
+        html: emailHtml,
+        text: `Nueva cotización - ${safeName}\nEmail: ${safeEmail}${safePhone ? `\nTel: ${safePhone}` : ""}${safeMessage ? `\nComentarios: ${safeMessage}` : ""}\n\nProductos:\n${list}`,
+      }),
+      sendEmail({
+        to: email,
+        subject: "Cotización recibida - Servipartz",
+        html: `<p>Hola ${safeName},</p><p>${clientMessage}</p><p>Saludos,<br/>Servipartz</p>`,
+        text: `Hola ${safeName},\n\n${clientMessage}\n\nSaludos,\nServipartz`,
+      }),
+    ]);
+    if (!okToStore) {
+      return NextResponse.json({ error: "Error al enviar el correo. Verifique que Gmail (contraseña de aplicación) o Resend estén bien configurados." }, { status: 500 });
+    }
+    // okToClient: si falla el correo de confirmación al cliente, no bloqueamos; ya se loguea en sendEmail
 
     return NextResponse.json({ ok: true });
   } catch (e) {

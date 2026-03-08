@@ -5,11 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, RefreshCw, Phone, ChevronRight } from "lucide-react";
+import { ImageLightbox } from "@/components/ImageLightbox";
 import { MOCK_SEMINUEVOS, CATEGORIES_SEM, type SeminuevoItem } from "@/lib/seminuevos";
 
 export default function SeminuevosPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
   const filtered = useMemo(() => {
     let list = MOCK_SEMINUEVOS;
@@ -28,7 +30,7 @@ export default function SeminuevosPage() {
   }, [search, category]);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-[100svh] bg-slate-50">
       {/* Cabecera azul */}
       <div className="bg-primary-700 text-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -124,7 +126,12 @@ export default function SeminuevosPage() {
                   className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5"
                 >
                   {filtered.map((item, i) => (
-                    <SeminuevoCard key={item.id} item={item} index={i} />
+                    <SeminuevoCard
+                      key={item.id}
+                      item={item}
+                      index={i}
+                      onOpenImage={item.image ? () => setLightbox({ src: item.image!, alt: item.name }) : undefined}
+                    />
                   ))}
                 </motion.ul>
               )}
@@ -147,11 +154,26 @@ export default function SeminuevosPage() {
           </div>
         </div>
       </div>
+
+      <ImageLightbox
+        open={!!lightbox}
+        onClose={() => setLightbox(null)}
+        src={lightbox?.src ?? ""}
+        alt={lightbox?.alt ?? ""}
+      />
     </div>
   );
 }
 
-function SeminuevoCard({ item, index }: { item: SeminuevoItem; index: number }) {
+function SeminuevoCard({
+  item,
+  index,
+  onOpenImage,
+}: {
+  item: SeminuevoItem;
+  index: number;
+  onOpenImage?: () => void;
+}) {
   return (
     <motion.li
       initial={{ opacity: 0, y: 12 }}
@@ -159,7 +181,14 @@ function SeminuevoCard({ item, index }: { item: SeminuevoItem; index: number }) 
       transition={{ delay: Math.min(index * 0.03, 0.2) }}
       className="group rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-200 transition-all duration-200"
     >
-      <div className="relative h-36 bg-primary-50 overflow-hidden">
+      <div
+        className={`relative h-36 bg-primary-50 overflow-hidden ${onOpenImage ? "cursor-zoom-in" : ""}`}
+        onClick={onOpenImage}
+        onKeyDown={onOpenImage ? (e) => e.key === "Enter" && onOpenImage() : undefined}
+        role={onOpenImage ? "button" : undefined}
+        tabIndex={onOpenImage ? 0 : undefined}
+        aria-label={onOpenImage ? "Ver imagen completa" : undefined}
+      >
         {item.image ? (
           <Image
             src={item.image}

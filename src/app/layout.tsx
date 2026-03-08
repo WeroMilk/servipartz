@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={plusJakarta.variable} data-scroll-behavior="smooth">
-      <body className="antialiased min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-x-hidden">
+      <body className="antialiased min-h-[100svh] flex flex-col bg-slate-50 text-slate-900 font-sans overflow-x-hidden">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

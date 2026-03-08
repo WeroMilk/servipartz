@@ -10,7 +10,7 @@ export const SITE = {
   phoneRaw: "6624049965",
   address: "Av. José San Healy 385, Olivares, 83180 Hermosillo, Son.",
   email: "asilvasm97@gmail.com",
-  googleReviews: "4.419",
+  googleReviews: "4.4",
   schedule: {
     weekdays: "8:00 a.m. – 6:30 p.m.",
     saturday: "8:00 a.m. – 2:00 p.m.",
