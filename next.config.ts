@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
       "'self'",
       "'unsafe-inline'",
       "'unsafe-eval'",
+      "https:",
+      "blob:",
       ...(isDev ? ["'unsafe-hashes'"] : []),
     ].join(" ");
     return [

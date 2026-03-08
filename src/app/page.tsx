@@ -193,9 +193,9 @@ export default function HomePage() {
                   </ul>
                 </div>
               </div>
-              {/* Mapa Google — centrado verticalmente en desktop con margen superior */}
-              <div className="lg:col-span-3 h-64 sm:h-72 min-h-[240px] mt-4 lg:mt-0 lg:min-h-0 lg:flex lg:items-center lg:justify-center lg:px-6 lg:pt-8 lg:pb-8 lg:rounded-r-xl">
-                <div className="w-full h-full lg:h-80 lg:max-h-[340px] relative overflow-hidden lg:rounded-lg lg:my-auto">
+              {/* Mapa Google — margen en todos los lados para verse centrado */}
+              <div className="lg:col-span-3 h-64 sm:h-72 min-h-[240px] p-4 sm:p-6 lg:p-8 lg:min-h-0 lg:flex lg:items-center lg:justify-center lg:rounded-r-xl">
+                <div className="w-full h-full lg:h-80 lg:max-h-[340px] relative overflow-hidden rounded-lg">
                 <iframe
                   title="Ubicación Servipartz"
                   src={MAPS_EMBED}

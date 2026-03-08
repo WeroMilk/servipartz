@@ -34,19 +34,24 @@ export function ImageLightbox({ open, onClose, src, alt }: ImageLightboxProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={onClose}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
           aria-label="Ver imagen completa"
         >
-          {/* Solo la imagen no cierra; clic en la zona negra cierra como la X */}
+          {/* Fondo: tap/click fuera de la imagen cierra (móvil y desktop) */}
+          <div
+            className="absolute inset-0 bg-black/90 cursor-pointer touch-manipulation"
+            onClick={onClose}
+            aria-hidden
+          />
+          {/* Imagen: tap/click en la imagen NO cierra */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative w-[95vw] h-[90vh] max-w-5xl max-h-[90vh] shrink-0"
+            className="relative z-10 w-[95vw] h-[90vh] max-w-5xl max-h-[90vh] shrink-0"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -64,7 +69,7 @@ export function ImageLightbox({ open, onClose, src, alt }: ImageLightboxProps) {
               e.stopPropagation();
               onClose();
             }}
-            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
             aria-label="Cerrar"
           >
             <X className="h-6 w-6" />
