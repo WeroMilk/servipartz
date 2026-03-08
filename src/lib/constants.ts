@@ -4,6 +4,9 @@ export const MAPS_LINK = "https://maps.app.goo.gl/er7MTwpmCVtZFiAQ7";
 /** Enlace para leer opiniones en Google */
 export const GOOGLE_REVIEWS_LINK = "https://www.google.com/search?q=servipartz+hermosillo+opiniones";
 
+/** Coordenadas del local (para centrar el mapa en el embed) */
+export const SITE_COORDS = { lat: 29.0722, lng: -110.964 } as const;
+
 export const SITE = {
   name: "Servipartz",
   phone: "662 404 9965",

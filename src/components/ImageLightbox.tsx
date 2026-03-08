@@ -45,23 +45,29 @@ export function ImageLightbox({ open, onClose, src, alt }: ImageLightboxProps) {
             onClick={onClose}
             aria-hidden
           />
-          {/* Imagen: tap/click en la imagen NO cierra */}
+          {/* Contenedor: tap fuera de la foto (espacio oscuro) cierra; tap en la foto no */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative z-10 w-[95vw] h-[90vh] max-w-5xl max-h-[90vh] shrink-0"
-            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 w-[95vw] h-[90vh] max-w-5xl max-h-[90vh] shrink-0 flex items-center justify-center cursor-default"
+            onClick={onClose}
           >
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              className="object-contain"
-              sizes="95vw"
-              unoptimized={src.startsWith("data:")}
-            />
+            <div
+              className="relative w-full h-full"
+              onClick={(e) => e.stopPropagation()}
+              role="presentation"
+            >
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-contain"
+                sizes="95vw"
+                unoptimized={src.startsWith("data:")}
+              />
+            </div>
           </motion.div>
           <button
             type="button"
