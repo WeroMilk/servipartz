@@ -86,17 +86,38 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-3 text-sm text-white/80">
-          <p>© {new Date().getFullYear()} Servipartz</p>
-          <a
-            href={GOOGLE_REVIEWS_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-white transition-colors"
-          >
-            <span className="text-amber-400">★</span>
-            {SITE.googleReviews} en Google
-          </a>
+        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col gap-6 text-sm text-white/80">
+          {/* Enlaces legales: una fila con buen espacio para que no se vean encimados */}
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 sm:gap-x-4">
+            <Link href="/aviso-legal" className="hover:text-white transition-colors">
+              Aviso legal
+            </Link>
+            <span className="text-white/40 hidden sm:inline" aria-hidden>·</span>
+            <Link href="/terminos-y-condiciones" className="hover:text-white transition-colors">
+              Términos y condiciones
+            </Link>
+            <span className="text-white/40 hidden sm:inline" aria-hidden>·</span>
+            <Link href="/politica-de-privacidad" className="hover:text-white transition-colors">
+              Política de privacidad
+            </Link>
+            <span className="text-white/40 hidden sm:inline" aria-hidden>·</span>
+            <Link href="/politica-de-cookies" className="hover:text-white transition-colors">
+              Política de cookies
+            </Link>
+          </div>
+          {/* Copyright y opiniones en una fila, bien separados */}
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-3">
+            <p>© {new Date().getFullYear()} Servipartz. Todos los derechos reservados.</p>
+            <a
+              href={GOOGLE_REVIEWS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
+            >
+              <span className="text-amber-400">★</span>
+              {SITE.googleReviews} opiniones en Google
+            </a>
+          </div>
         </div>
       </div>
     </footer>

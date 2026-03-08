@@ -193,19 +193,19 @@ export default function HomePage() {
                   </ul>
                 </div>
               </div>
-              {/* Mapa Google — margen en todos los lados para verse centrado */}
+              {/* Mapa Google — iframe desplazado hacia arriba para que el pin quede centrado en el box */}
               <div className="lg:col-span-3 h-64 sm:h-72 min-h-[240px] p-4 sm:p-6 lg:p-8 lg:min-h-0 lg:flex lg:items-center lg:justify-center lg:rounded-r-xl">
                 <div className="w-full h-full lg:h-80 lg:max-h-[340px] relative overflow-hidden rounded-lg">
                 <iframe
                   title="Ubicación Servipartz"
                   src={MAPS_EMBED}
                   width="100%"
-                  height="100%"
-                  style={{ border: 0, position: "absolute", top: 0, left: 0 }}
+                  height="120%"
+                  style={{ border: 0, position: "absolute", top: "-10%", left: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full object-cover"
+                  className="object-cover"
                 />
                 </div>
               </div>
