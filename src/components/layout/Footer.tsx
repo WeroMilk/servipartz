@@ -86,36 +86,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col gap-4 text-sm text-white text-center">
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
-            <Link href="/aviso-legal" className="text-white/80 hover:text-white transition-colors">
-              Aviso legal
-            </Link>
-            <span className="text-white/40">·</span>
-            <Link href="/terminos-y-condiciones" className="text-white/80 hover:text-white transition-colors">
-              Términos y condiciones
-            </Link>
-            <span className="text-white/40">·</span>
-            <Link href="/politica-de-privacidad" className="text-white/80 hover:text-white transition-colors">
-              Política de privacidad
-            </Link>
-            <span className="text-white/40">·</span>
-            <Link href="/politica-de-cookies" className="text-white/80 hover:text-white transition-colors">
-              Política de cookies
-            </Link>
-          </div>
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4">
-            <p>© {new Date().getFullYear()} Servipartz. Todos los derechos reservados.</p>
-            <a
-              href={GOOGLE_REVIEWS_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors"
-            >
-              <span className="text-amber-500">★</span>
-              {SITE.googleReviews} opiniones en Google
-            </a>
-          </div>
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-3 text-sm text-white/80">
+          <p>© {new Date().getFullYear()} Servipartz</p>
+          <a
+            href={GOOGLE_REVIEWS_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 hover:text-white transition-colors"
+          >
+            <span className="text-amber-400">★</span>
+            {SITE.googleReviews} en Google
+          </a>
         </div>
       </div>
     </footer>
