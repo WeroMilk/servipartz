@@ -4,14 +4,16 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, RefreshCw, Phone, ChevronRight } from "lucide-react";
+import { Search, RefreshCw, Phone, ChevronRight, Plus } from "lucide-react";
 import { ImageLightbox } from "@/components/ImageLightbox";
 import { MOCK_SEMINUEVOS, CATEGORIES_SEM, type SeminuevoItem } from "@/lib/seminuevos";
+import { useQuoteStore } from "@/store/quoteStore";
 
 export default function SeminuevosPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const addSeminuevoItem = useQuoteStore((s) => s.addSeminuevoItem);
 
   const filtered = useMemo(() => {
     let list = MOCK_SEMINUEVOS;
@@ -130,6 +132,7 @@ export default function SeminuevosPage() {
                       key={item.id}
                       item={item}
                       index={i}
+                      onAddToQuote={() => addSeminuevoItem(item)}
                       onOpenImage={item.image ? () => setLightbox({ src: item.image!, alt: item.name }) : undefined}
                     />
                   ))}
@@ -138,13 +141,17 @@ export default function SeminuevosPage() {
             </AnimatePresence>
 
             {filtered.length > 0 && (
-              <div className="mt-10 p-6 rounded-xl bg-white border border-slate-200 text-center">
-                <p className="text-slate-600 mb-4">
-                  ¿Te interesa algún equipo? Contáctanos para precio y disponibilidad.
-                </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center p-6 rounded-xl bg-white border border-slate-200">
+                <Link
+                  href="/cotizacion"
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
+                >
+                  Ver mi cotización
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
                 <a
                   href="tel:6624049965"
-                  className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-lg border-2 border-primary-600 px-6 py-3.5 text-sm font-semibold text-primary-600 hover:bg-primary-50 transition-colors"
                 >
                   <Phone className="h-4 w-4" />
                   Llamar para consultar
@@ -168,10 +175,12 @@ export default function SeminuevosPage() {
 function SeminuevoCard({
   item,
   index,
+  onAddToQuote,
   onOpenImage,
 }: {
   item: SeminuevoItem;
   index: number;
+  onAddToQuote: () => void;
   onOpenImage?: () => void;
 }) {
   return (
@@ -216,13 +225,23 @@ function SeminuevoCard({
         {item.price && (
           <p className="mt-1 text-sm font-medium text-primary-600">{item.price}</p>
         )}
-        <a
-          href="tel:6624049965"
-          className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-600 text-primary-600 py-2.5 text-sm font-semibold hover:bg-primary-50 transition-colors"
-        >
-          Consultar
-          <ChevronRight className="h-4 w-4" />
-        </a>
+        <div className="mt-4 flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={onAddToQuote}
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 text-white py-2.5 text-sm font-semibold hover:bg-primary-700 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            Añadir a cotización
+          </button>
+          <a
+            href="tel:6624049965"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-600 text-primary-600 py-2.5 text-sm font-semibold hover:bg-primary-50 transition-colors"
+          >
+            Consultar
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </div>
       </div>
     </motion.li>
   );

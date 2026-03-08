@@ -191,14 +191,34 @@ const CIERRE_SIN_RESOLVER =
   ".";
 
 function getLocalExpertReply(messages: Message[]): string {
-  const context = messages.map((m) => m.content).join(" ").toLowerCase();
   const lastUser = messages.filter((m) => m.role === "user").pop()?.content?.toLowerCase() ?? "";
+  const userContext = messages.filter((m) => m.role === "user").map((m) => m.content).join(" ").toLowerCase();
 
-  const has = (...words: string[]) => words.some((w) => context.includes(w));
+  const has = (...words: string[]) => words.some((w) => userContext.includes(w));
+  const lastUserHas = (...words: string[]) => words.some((w) => lastUser.includes(w));
   const userReportedBack = (...words: string[]) => words.some((w) => lastUser.includes(w));
 
-  // ——— Lavadora: flujo diagnóstico (revisa → luego solución + oferta) ———
-  if (has("lavadora")) {
+  // Prioridad: el equipo que el usuario mencionó (evita confundir con ejemplos del mensaje inicial del asistente)
+  // userContext = solo mensajes del usuario (no incluye ejemplos del bot)
+  // ——— Refrigerador / nevera ———
+  if (
+    lastUserHas("refrigerador", "refri", "nevera", "refrigeradora") ||
+    (has("refrigerador", "refri", "nevera") && lastUserHas("condensador", "compresor", "termostato", "revisé", "encontré"))
+  ) {
+    if (userReportedBack("quemado", "revisé", "creo que es", "es el compresor", "es el capacitor", "relé", "no arranca")) {
+      return "Listo compa, con eso ya sabemos. La solución es cambiar esa pieza." + CIERRE_PIEZA;
+    }
+    if (has("no enfría", "no enfría bien", "no enfria")) {
+      return "Compa, revisa: 1) Que la puerta cierre bien y el empaque no esté roto, 2) Que el condensador (rejilla atrás) no esté lleno de polvo, 3) Si el compresor (abajo atrás) arranca o hace ruido raro. Si no arranca o huele a quemado puede ser capacitor o relé. Revisa y me dices qué ves 👍";
+    }
+    return "Compa, ¿no enfría, hace ruido o no prende el compresor? Dime el síntoma y te digo qué revisar paso a paso.";
+  }
+
+  // ——— Lavadora ———
+  if (
+    lastUserHas("lavadora") ||
+    (has("lavadora") && lastUserHas("correa", "transmisión", "tambor", "revisé", "encontré"))
+  ) {
     // Si ya dio seguimiento (quemado, revisé, creo que es, transmisión, correa, etc.) → dar solución y cierre
     if (userReportedBack("quemado", "quemada", "revisé", "revisé y", "creo que es", "es la transmisión", "es la correa", "son los rodamientos", "está rota", "se ve mal", "encontré", "la correa está", "la transmisión")) {
       return "Muy bien compa, con eso ya le atinamos 👍 La solución es cambiar esa pieza. En Servipartz la tenemos." + CIERRE_PIEZA;
@@ -218,19 +238,8 @@ function getLocalExpertReply(messages: Message[]): string {
     return "Compa, cuéntame más: ¿no centrifuga, no llena, hace ruido o tiene fuga? Con eso te digo qué revisar y te guío paso a paso 👍";
   }
 
-  // ——— Refrigerador / nevera ———
-  if (has("refrigerador", "refri", "nevera", "refrigeradora")) {
-    if (userReportedBack("quemado", "revisé", "creo que es", "es el compresor", "es el capacitor", "relé", "no arranca")) {
-      return "Listo compa, con eso ya sabemos. La solución es cambiar esa pieza." + CIERRE_PIEZA;
-    }
-    if (has("no enfría", "no enfría bien", "no enfria")) {
-      return "Compa, revisa: 1) Que la puerta cierre bien y el empaque no esté roto, 2) Que el condensador (rejilla atrás) no esté lleno de polvo, 3) Si el compresor (abajo atrás) arranca o hace ruido raro. Si no arranca o huele a quemado puede ser capacitor o relé. Revisa y me dices qué ves 👍";
-    }
-    return "Compa, ¿no enfría, hace ruido o no prende el compresor? Dime el síntoma y te digo qué revisar paso a paso.";
-  }
-
   // ——— Licuadora ———
-  if (has("licuadora")) {
+  if (lastUserHas("licuadora") || has("licuadora")) {
     if (userReportedBack("quemado", "revisé", "es el motor", "huele feo")) {
       return "Sí compa, cuando huele a quemado casi siempre es el motor. Lo tenemos." + CIERRE_PIEZA;
     }
@@ -244,7 +253,7 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Microondas ———
-  if (has("microondas", "microonda")) {
+  if (lastUserHas("microondas", "microonda") || has("microondas", "microonda")) {
     if (has("no calienta", "no calienta bien")) {
       return "Compa, cuando no calienta suele ser magnetrón, capacitor o diodo. Eso es alta tensión, no lo abras tú 🛠️ Lo mejor es que un técnico lo revise." + CIERRE_SIN_RESOLVER;
     }
@@ -258,7 +267,7 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Estufa ———
-  if (has("estufa", "parrilla", "estufa de gas")) {
+  if (lastUserHas("estufa", "parrilla") || has("estufa", "parrilla")) {
     if (has("huele a gas", "olor a gas", "fuga de gas")) {
       return "Compa, eso es serio 🛠️ Cierra la llave del gas, ventila y llama a un técnico de inmediato. Nosotros podemos agendar visita a domicilio ($300, te los descontamos si reparas) o puedes traer la estufa al taller si es transportable. Tel. " + SITE.phone + ".";
     }
@@ -269,7 +278,7 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Aire acondicionado ———
-  if (has("aire", "minisplit", "aire acondicionado", "ac")) {
+  if (lastUserHas("aire", "minisplit", "ac") || has("aire", "minisplit")) {
     if (userReportedBack("revisé", "creo que es", "capacitor", "compresor")) {
       return "Perfecto compa, con eso ya le atinamos. Esa pieza la tenemos." + CIERRE_PIEZA;
     }
@@ -277,7 +286,7 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Secadora ———
-  if (has("secadora")) {
+  if (lastUserHas("secadora") || has("secadora")) {
     if (has("no calienta", "aire frío")) {
       return "Puede ser la resistencia (eléctrica), el encendido (gas) o un termostato de seguridad. Revisa que el filtro de pelusas esté limpio; si sigue igual, mejor que un técnico lo vea." + CIERRE_SIN_RESOLVER;
     }
@@ -288,17 +297,17 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Lavavajillas ———
-  if (has("lavavajillas", "lavavajilla")) {
+  if (lastUserHas("lavavajillas", "lavavajilla") || has("lavavajillas", "lavavajilla")) {
     return "Revisa que los filtros y los brazos aspersores estén limpios (destapa orificios con palillo). Si no desagua, revisa la manguera y la bomba. Si no calienta el agua puede ser la resistencia. Tenemos refacciones." + CIERRE_PIEZA;
   }
 
   // ——— Horno ———
-  if (has("horno")) {
+  if (lastUserHas("horno") || has("horno")) {
     return "Si no calienta revisa termostato y resistencias (arriba/abajo). Si la puerta no cierra bien puede ser el burlete. Revisa y me dices qué hace; tenemos resistencias, termostato y empaques." + CIERRE_PIEZA;
   }
 
   // ——— Cafetera ———
-  if (has("cafetera")) {
+  if (lastUserHas("cafetera") || has("cafetera")) {
     if (has("no calienta", "café frío", "muy lento")) {
       return "Puede ser la resistencia o el termostato. Si el café sale frío o lento, a veces es sarro: descalcifica con vinagre blanco. Si sigue igual, la resistencia puede estar abierta." + CIERRE_PIEZA;
     }
@@ -306,7 +315,7 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Calentador / Boiler ———
-  if (has("calentador", "boiler", "calentador de agua")) {
+  if (lastUserHas("calentador", "boiler") || has("calentador", "boiler")) {
     if (has("gas", "piloto")) {
       return "Si es de gas y no calienta, revisa que el piloto esté encendido y que haya gas. El termopar (sensor de llama) puede estar sucio o dañado. Si hay fuga por la válvula de seguridad, puede ser presión alta." + CIERRE_PIEZA;
     }
@@ -314,7 +323,7 @@ function getLocalExpertReply(messages: Message[]): string {
   }
 
   // ——— Soldadura ———
-  if (has("soldadura", "soldador")) {
+  if (lastUserHas("soldadura", "soldador") || has("soldadura", "soldador")) {
     return "Compa, en soldadora revisa conexiones, tierra y que el amperaje vaya con el electrodo. Si necesitas electrodos, careta o refacciones las tenemos. Cotiza en la página o llámanos al " + SITE.phone + " 👍";
   }
 

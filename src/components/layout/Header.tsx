@@ -7,6 +7,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, MapPin } from "lucide-react";
 import { MAPS_LINK } from "@/lib/constants";
+import { useQuoteStore } from "@/store/quoteStore";
 
 const CotizationNavLink = dynamic(
   () => import("./CotizationNavLink").then((m) => ({ default: m.CotizationNavLink })),
@@ -23,6 +24,7 @@ const navLinks = [
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const flashMenu = useQuoteStore((s) => s.flashMenu);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-black/95 backdrop-blur-sm border-b border-white/5 relative">
@@ -69,10 +71,21 @@ export function Header() {
         <button
           type="button"
           onClick={() => setMobileOpen((o) => !o)}
-          className="md:hidden p-2.5 rounded-xl bg-white/10 text-white hover:bg-white/15 transition-colors"
+          className="md:hidden relative p-2.5 rounded-xl bg-white/10 text-white hover:bg-white/15 transition-colors"
           aria-label="Menú"
         >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {flashMenu && (
+            <motion.span
+              className="absolute inset-0 rounded-xl border-2 border-red-500"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: [1, 0.3, 1, 0.3, 1, 0.3, 1] }}
+              transition={{ duration: 2.5, times: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1] }}
+              aria-hidden
+            />
+          )}
+          <span className="relative z-10 flex">
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </span>
         </button>
       </div>
 
