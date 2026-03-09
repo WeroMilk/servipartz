@@ -156,8 +156,10 @@ export default function CotizacionPage() {
                   </label>
                   <input
                     id="name"
+                    name="name"
                     type="text"
                     required
+                    autoComplete="name"
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                     className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-900"
@@ -169,8 +171,10 @@ export default function CotizacionPage() {
                   </label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     required
+                    autoComplete="email"
                     value={form.email}
                     onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                     className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-900"
@@ -182,7 +186,9 @@ export default function CotizacionPage() {
                   </label>
                   <input
                     id="phone"
+                    name="phone"
                     type="tel"
+                    autoComplete="tel"
                     value={form.phone}
                     onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                     className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-900"
@@ -194,6 +200,7 @@ export default function CotizacionPage() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={3}
                     value={form.message}
                     onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}

@@ -101,10 +101,16 @@ export default function CatalogoPage() {
           <div className="flex-1 min-w-0">
             {/* Barra de búsqueda */}
             <div className="mb-6">
+              <label htmlFor="catalogo-search" className="sr-only">
+                Buscar por nombre o código (SKU)
+              </label>
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <input
+                  id="catalogo-search"
+                  name="q"
                   type="search"
+                  autoComplete="off"
                   placeholder="Buscar por nombre o código (SKU)..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}

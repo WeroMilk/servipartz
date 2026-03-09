@@ -118,8 +118,14 @@ export function ChatbotWidget() {
                 }}
                 className="flex gap-2"
               >
+                <label htmlFor="chatbot-input" className="sr-only">
+                  Escribe tu mensaje
+                </label>
                 <input
+                  id="chatbot-input"
+                  name="message"
                   type="text"
+                  autoComplete="off"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Describe el problema..."

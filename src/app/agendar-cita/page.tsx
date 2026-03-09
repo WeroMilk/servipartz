@@ -130,12 +130,15 @@ export default function AgendarCitaPage() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div>
-              <label className="block text-sm font-medium text-zinc-700 mb-1">Nombre *</label>
+              <label htmlFor="agendar-name" className="block text-sm font-medium text-zinc-700 mb-1">Nombre *</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <input
+                  id="agendar-name"
+                  name="name"
                   type="text"
                   required
+                  autoComplete="name"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-200 bg-white text-zinc-900"
@@ -144,12 +147,15 @@ export default function AgendarCitaPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700 mb-1">Teléfono *</label>
+              <label htmlFor="agendar-phone" className="block text-sm font-medium text-zinc-700 mb-1">Teléfono *</label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <input
+                  id="agendar-phone"
+                  name="phone"
                   type="tel"
                   required
+                  autoComplete="tel"
                   value={form.phone}
                   onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-200 bg-white text-zinc-900"
@@ -158,10 +164,12 @@ export default function AgendarCitaPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700 mb-1">Fecha preferida *</label>
+              <label htmlFor="agendar-date" className="block text-sm font-medium text-zinc-700 mb-1">Fecha preferida *</label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <select
+                  id="agendar-date"
+                  name="date"
                   required
                   value={form.date}
                   onChange={(e) => setForm((f) => ({ ...f, date: e.target.value, time: "" }))}
@@ -177,10 +185,12 @@ export default function AgendarCitaPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700 mb-1">Horario preferido *</label>
+              <label htmlFor="agendar-time" className="block text-sm font-medium text-zinc-700 mb-1">Horario preferido *</label>
               <div className="relative">
                 <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400" />
                 <select
+                  id="agendar-time"
+                  name="time"
                   required
                   value={form.time}
                   onChange={(e) => setForm((f) => ({ ...f, time: e.target.value }))}
@@ -197,12 +207,15 @@ export default function AgendarCitaPage() {
               </p>
             </div>
             <div className="md:col-span-2 lg:col-span-4">
-              <label className="block text-sm font-medium text-zinc-700 mb-1">Dirección del servicio *</label>
+              <label htmlFor="agendar-address" className="block text-sm font-medium text-zinc-700 mb-1">Dirección del servicio *</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-3 h-5 w-5 text-zinc-400" />
                 <textarea
+                  id="agendar-address"
+                  name="address"
                   required
                   rows={2}
+                  autoComplete="street-address"
                   value={form.address}
                   onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))}
                   className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-200 bg-white text-zinc-900 resize-none"
@@ -211,10 +224,12 @@ export default function AgendarCitaPage() {
               </div>
             </div>
             <div className="md:col-span-2 lg:col-span-4">
-              <label className="block text-sm font-medium text-zinc-700 mb-1">Descripción del problema (opcional)</label>
+              <label htmlFor="agendar-message" className="block text-sm font-medium text-zinc-700 mb-1">Descripción del problema (opcional)</label>
               <div className="relative">
                 <MessageSquare className="absolute left-3 top-3 h-5 w-5 text-zinc-400" />
                 <textarea
+                  id="agendar-message"
+                  name="message"
                   rows={3}
                   value={form.message}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}

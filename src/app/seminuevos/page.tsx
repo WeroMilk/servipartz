@@ -95,10 +95,16 @@ export default function SeminuevosPage() {
 
           <div className="flex-1 min-w-0">
             <div className="mb-6">
+              <label htmlFor="seminuevos-search" className="sr-only">
+                Buscar por nombre o categoría
+              </label>
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
+                  id="seminuevos-search"
+                  name="q"
                   type="search"
+                  autoComplete="off"
                   placeholder="Buscar por nombre o categoría..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
