@@ -131,7 +131,7 @@ export default function SeminuevosPage() {
                   key="list"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5"
+                  className="grid grid-cols-2 xl:grid-cols-3 gap-5"
                 >
                   {filtered.map((item, i) => (
                     <SeminuevoCard

@@ -137,7 +137,7 @@ export default function CatalogoPage() {
                   key="list"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch"
+                  className="grid grid-cols-2 xl:grid-cols-3 gap-5 items-stretch"
                 >
                   {filtered.map((product, i) => (
                     <ProductCard
