@@ -155,57 +155,65 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Visítanos + mapa — poco padding abajo para que el footer quede pegado */}
-      <section className="pt-16 sm:pt-24 pb-6 sm:pb-8 bg-slate-50/70">
+      {/* Visítanos + mapa — sección organizada y profesional, sin espacio sobrante */}
+      <section className="pt-14 sm:pt-20 pb-4 sm:pb-6 bg-slate-100/80">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-slate-200/80 bg-white overflow-hidden">
-            <div className="grid lg:grid-cols-5 gap-0 lg:items-stretch">
-              {/* Columna izquierda: datos + horario */}
-              <div className="lg:col-span-2 p-6 sm:p-8 flex flex-col justify-center min-h-0">
-                <h2 className="text-xl font-semibold text-slate-900">Visítanos</h2>
-                <p className="mt-2 text-sm text-slate-500">
-                  Av. José San Healy 385, Olivares, 83180 Hermosillo, Son.
+          <div className="rounded-2xl bg-white shadow-lg shadow-slate-200/60 ring-1 ring-slate-200/80 overflow-hidden">
+            <div className="grid lg:grid-cols-[1fr_1.4fr] gap-0 min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]">
+              {/* Columna izquierda: información de contacto */}
+              <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10 order-2 lg:order-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary-600 mb-4">
+                  Ubicación
+                </p>
+                <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
+                  Visítanos
+                </h2>
+                <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                  Av. José San Healy 385, Olivares
+                  <br />
+                  <span className="text-slate-500">83180 Hermosillo, Son.</span>
                 </p>
                 <a
                   href={MAPS_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm text-red-600 font-medium hover:text-red-700"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
                 >
-                  <MapPin className="h-3.5 w-3.5" />
+                  <MapPin className="h-4 w-4 shrink-0" />
                   Cómo llegar
                 </a>
-                <div className="mt-4">
-                  <a href="tel:6624049965" className="flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 font-medium">
-                    <Phone className="h-3.5 w-3.5" />
-                    662 404 9965
-                  </a>
-                </div>
-                <div className="mt-6 pt-6 border-t border-slate-100">
+                <a
+                  href="tel:6624049965"
+                  className="mt-4 flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
+                >
+                  <Phone className="h-4 w-4 shrink-0 text-slate-500" />
+                  662 404 9965
+                </a>
+                <div className="mt-8 pt-6 border-t border-slate-100">
                   <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-slate-400" />
+                    <Clock className="h-4 w-4 text-slate-400 shrink-0" />
                     Horario
                   </h3>
-                  <ul className="mt-3 space-y-1.5 text-sm text-slate-500">
+                  <ul className="mt-3 space-y-2 text-sm text-slate-600">
                     <li>Lunes a Viernes: 8:00 a.m. – 6:30 p.m.</li>
                     <li>Sábado: 8:00 a.m. – 2:00 p.m.</li>
-                    <li>Domingo: Cerrado</li>
+                    <li className="text-slate-500">Domingo: Cerrado</li>
                   </ul>
                 </div>
               </div>
-              {/* Mapa Google — ocupa todo el box (sin padding en desktop), borde derecho redondeado */}
-              <div className="lg:col-span-3 h-64 sm:h-72 min-h-[240px] p-4 sm:p-6 lg:p-0 lg:min-h-0 lg:flex lg:rounded-r-xl overflow-hidden">
-                <div className="w-full h-full min-h-0 relative overflow-hidden rounded-lg lg:rounded-none lg:rounded-r-xl">
+              {/* Mapa: altura consistente, borde redondeado a la derecha */}
+              <div className="relative min-h-[240px] sm:min-h-[280px] lg:min-h-0 lg:aspect-auto order-1 lg:order-2">
+                <div className="absolute inset-0 lg:rounded-r-2xl overflow-hidden bg-slate-100">
                   <iframe
                     title="Ubicación Servipartz"
                     src={MAPS_EMBED}
                     width="100%"
                     height="100%"
-                    style={{ border: 0, position: "absolute", top: 0, left: 0 }}
+                    style={{ border: 0, position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                 </div>
               </div>
