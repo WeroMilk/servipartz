@@ -3,7 +3,7 @@ import { ChevronLeft } from "lucide-react";
 import { SITE } from "@/lib/constants";
 
 export const metadata = {
-  title: "Términos y condiciones | Servipartz",
+  title: "Términos y condiciones | SERVIPARTZ",
   description: "Términos y condiciones de uso del sitio web y servicios.",
 };
 

@@ -27,7 +27,7 @@ export function Footer() {
             <span className="relative block h-9 w-[8.2rem] md:-ml-1">
               <Image
                 src="/logo.png"
-                alt="Servipartz"
+                alt="SERVIPARTZ"
                 fill
                 className="object-contain object-center md:object-left"
                 sizes="131px"
@@ -102,7 +102,7 @@ export function Footer() {
         <div className="mt-10 pt-8 border-t border-white/10 flex flex-col gap-6 text-sm text-white/80">
           {/* Copyright y opiniones arriba — centrado */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6">
-            <p>© {new Date().getFullYear()} Servipartz. Todos los derechos reservados.</p>
+            <p>© {new Date().getFullYear()} SERVIPARTZ. Todos los derechos reservados.</p>
             <a
               href={GOOGLE_REVIEWS_LINK}
               target="_blank"

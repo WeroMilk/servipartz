@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const safeMessage = message ? escapeHtml(message.trim()) : "";
 
     const emailHtml = `
-      <h2>Nueva solicitud de cita - Servipartz</h2>
+      <h2>Nueva solicitud de cita - SERVIPARTZ</h2>
       <p><strong>Nombre:</strong> ${safeName}</p>
       <p><strong>Teléfono:</strong> ${safePhone}</p>
       <p><strong>Dirección:</strong> ${safeAddress}</p>

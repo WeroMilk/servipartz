@@ -12,7 +12,7 @@ const TALLER_HORARIO = "Lun–Vie 8:00–18:30, Sáb 8:00–14:00. Dom cerrado."
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
   content:
-    "¿Qué tal compa? 👋 Aquí el técnico de Servipartz, en Hermosillo. Cuéntame qué equipo traes y qué le pasa (ej: \"mi lavadora no gira el centro\", \"el refri no enfría\"). Te voy guiando con qué revisar; si sacamos la pieza te digo cómo cotizarla o que vaya un técnico. Si no quedamos seguros, te ofrezco visita a domicilio ($300, te los descontamos si reparas) o traerlo al taller. ¿Qué tienes? 🛠️",
+    "¿Qué tal compa? 👋 Aquí el técnico de SERVIPARTZ, en Hermosillo. Cuéntame qué equipo traes y qué le pasa (ej: \"mi lavadora no gira el centro\", \"el refri no enfría\"). Te voy guiando con qué revisar; si sacamos la pieza te digo cómo cotizarla o que vaya un técnico. Si no quedamos seguros, te ofrezco visita a domicilio ($300, te los descontamos si reparas) o traerlo al taller. ¿Qué tienes? 🛠️",
 };
 
 export function ChatbotWidget() {
@@ -74,7 +74,7 @@ export function ChatbotWidget() {
             className="fixed bottom-20 right-4 left-4 sm:left-auto sm:w-[380px] max-h-[70vh] z-[101] rounded-2xl border border-zinc-200 bg-white shadow-2xl flex flex-col overflow-hidden"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 bg-zinc-900 text-white">
-              <span className="font-semibold">Asistente Servipartz</span>
+              <span className="font-semibold">Asistente SERVIPARTZ</span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -227,7 +227,7 @@ function getLocalExpertReply(messages: Message[]): string {
   ) {
     // Si ya dio seguimiento (quemado, revisé, creo que es, transmisión, correa, etc.) → dar solución y cierre
     if (userReportedBack("quemado", "quemada", "revisé", "revisé y", "creo que es", "es la transmisión", "es la correa", "son los rodamientos", "está rota", "se ve mal", "encontré", "la correa está", "la transmisión")) {
-      return "Muy bien compa, con eso ya le atinamos 👍 La solución es cambiar esa pieza. En Servipartz la tenemos." + CIERRE_PIEZA;
+      return "Muy bien compa, con eso ya le atinamos 👍 La solución es cambiar esa pieza. En SERVIPARTZ la tenemos." + CIERRE_PIEZA;
     }
     if (has("no gira", "no centrifuga", "no lava bien", "no lava la ropa", "no lava", "tambor", "centro no gira", "lo del centro", "no gira lo del centro", "no lava bien la ropa")) {
       return "Compa, cuando no gira el tambor o no centrifuga puede ser transmisión, correa, rodamientos o amortiguadores. Revisa: 1) Si la correa está suelta o rota (por atrás), 2) Si el tambor suena a metal o hace ruido raro, 3) Si ves algo quemado o oliendo feo en la transmisión. Revisa eso y me dices qué ves, así afinamos 🔧";

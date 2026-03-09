@@ -33,7 +33,7 @@ export function Header() {
           <span className="relative block h-11 w-[10rem] sm:h-12 sm:w-[11rem]">
             <Image
               src="/logo.png"
-              alt="Servipartz"
+              alt="SERVIPARTZ"
               fill
               className="object-contain object-left"
               sizes="176px"

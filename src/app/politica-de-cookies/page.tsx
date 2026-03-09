@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
 export const metadata = {
-  title: "Política de cookies | Servipartz",
+  title: "Política de cookies | SERVIPARTZ",
   description: "Información sobre el uso de cookies en este sitio web.",
 };
 

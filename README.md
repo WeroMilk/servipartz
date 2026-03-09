@@ -1,6 +1,6 @@
-# Servipartz - Sitio web
+# SERVIPARTZ - Sitio web
 
-Sitio web para **Servipartz**, proveedor de repuestos de electrodomésticos en Hermosillo, Sonora.
+Sitio web para **SERVIPARTZ**, proveedor de repuestos de electrodomésticos en Hermosillo, Sonora.
 
 ## Tecnologías
 
@@ -43,7 +43,7 @@ Para que **cotización** y **agendar cita** envíen correos reales necesitas **u
 **Cómo obtener la contraseña de aplicación (Gmail):**
 1. Activa [verificación en 2 pasos](https://myaccount.google.com/signinoptions/two-step-verification) en tu cuenta de Google.
 2. Entra en [Contraseñas de aplicación](https://myaccount.google.com/apppasswords).
-3. Crea una contraseña para "Correo" / "Otro" (nombre ej: Servipartz).
+3. Crea una contraseña para "Correo" / "Otro" (nombre ej: SERVIPARTZ).
 4. Copia la contraseña de 16 caracteres y pégala en `GMAIL_APP_PASSWORD` en `.env.local`.
 
 Si no configuras Gmail, puedes usar **Resend**:
@@ -52,7 +52,7 @@ Si no configuras Gmail, puedes usar **Resend**:
 |----------|-----|
 | `RESEND_API_KEY` | API key de [Resend](https://resend.com) (obligatoria para Resend). |
 | `RESEND_FROM_EMAIL` | (Opcional) Correo desde el que enviar, ej. `notificaciones@tudominio.com`. Para enviar a cualquier destinatario debes [verificar tu dominio en Resend](https://resend.com/domains). Sin esto se usa `onboarding@resend.dev` (solo pruebas). |
-| `RESEND_FROM_NAME` | (Opcional) Nombre del remitente; por defecto "Servipartz". |
+| `RESEND_FROM_NAME` | (Opcional) Nombre del remitente; por defecto "SERVIPARTZ". |
 
 **Importante:** Para que el envío de correo funcione debes configurar **una** de las dos opciones (Gmail o Resend) en `.env.local` en local y en **Vercel → Project → Settings → Environment Variables** en producción. Si no está configurado, la API devuelve 503 y se indica al usuario que contacte por teléfono.
 

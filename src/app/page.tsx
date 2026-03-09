@@ -205,7 +205,7 @@ export default function HomePage() {
               <div className="relative min-h-[240px] sm:min-h-[280px] lg:min-h-0 lg:aspect-auto order-1 lg:order-2">
                 <div className="absolute inset-0 lg:rounded-r-2xl overflow-hidden bg-slate-100">
                   <iframe
-                    title="Ubicación Servipartz"
+                    title="Ubicación SERVIPARTZ"
                     src={MAPS_EMBED}
                     width="100%"
                     height="100%"

@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       .join("\n");
 
     const emailHtml = `
-      <h2>Nueva cotización - Servipartz</h2>
+      <h2>Nueva cotización - SERVIPARTZ</h2>
       <p><strong>Nombre:</strong> ${safeName}</p>
       <p><strong>Email:</strong> ${safeEmail}</p>
       ${safePhone ? `<p><strong>Teléfono:</strong> ${safePhone}</p>` : ""}
@@ -79,15 +79,15 @@ export async function POST(request: NextRequest) {
       sendEmail({
         to: SITE.email,
         replyTo: email,
-        subject: `Cotización de ${safeName} - Servipartz`,
+        subject: `Cotización de ${safeName} - SERVIPARTZ`,
         html: emailHtml,
         text: `Nueva cotización - ${safeName}\nEmail: ${safeEmail}${safePhone ? `\nTel: ${safePhone}` : ""}${safeMessage ? `\nComentarios: ${safeMessage}` : ""}\n\nProductos:\n${list}`,
       }),
       sendEmail({
         to: email,
-        subject: "Cotización recibida - Servipartz",
-        html: `<p>Hola ${safeName},</p><p>${clientMessage}</p><p>Saludos,<br/>Servipartz</p>`,
-        text: `Hola ${safeName},\n\n${clientMessage}\n\nSaludos,\nServipartz`,
+        subject: "Cotización recibida - SERVIPARTZ",
+        html: `<p>Hola ${safeName},</p><p>${clientMessage}</p><p>Saludos,<br/>SERVIPARTZ</p>`,
+        text: `Hola ${safeName},\n\n${clientMessage}\n\nSaludos,\nSERVIPARTZ`,
       }),
     ]);
     if (!okToStore) {

@@ -3,7 +3,7 @@ import { ChevronLeft } from "lucide-react";
 import { SITE } from "@/lib/constants";
 
 export const metadata = {
-  title: "Política de privacidad | Servipartz",
+  title: "Política de privacidad | SERVIPARTZ",
   description: "Política de privacidad y protección de datos personales.",
 };
 

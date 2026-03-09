@@ -49,7 +49,7 @@ async function sendWithGmail(options: SendEmailOptions): Promise<boolean> {
   const user = process.env.GMAIL_USER!;
   const from = options.fromName
     ? `"${options.fromName}" <${user}>`
-    : `"Servipartz" <${user}>`;
+    : `"SERVIPARTZ" <${user}>`;
 
   try {
     await Promise.race([
@@ -74,9 +74,9 @@ async function sendWithGmail(options: SendEmailOptions): Promise<boolean> {
 
 function getResendFrom(): string {
   const email = process.env.RESEND_FROM_EMAIL?.trim();
-  const name = process.env.RESEND_FROM_NAME?.trim() || "Servipartz";
+  const name = process.env.RESEND_FROM_NAME?.trim() || "SERVIPARTZ";
   if (email) return `${name} <${email}>`;
-  return "Servipartz <onboarding@resend.dev>";
+  return "SERVIPARTZ <onboarding@resend.dev>";
 }
 
 async function sendWithResend(options: SendEmailOptions): Promise<boolean> {

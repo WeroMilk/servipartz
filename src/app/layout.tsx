@@ -17,21 +17,21 @@ const baseUrl =
 
 export const metadata: Metadata = {
   metadataBase: baseUrl ? new URL(baseUrl) : undefined,
-  title: "Servipartz | Electrodomesticos",
+  title: "SERVIPARTZ | Electrodomésticos",
   description:
     "Proveedores y técnicos de electrodomésticos en Hermosillo. Catálogo amplio, cotizaciones, servicio técnico a domicilio. Refrigeradores, licuadoras, soldadura y más.",
-  keywords: ["repuestos", "electrodomésticos", "Hermosillo", "Servipartz", "refrigeradores", "técnico"],
+  keywords: ["repuestos", "electrodomésticos", "Hermosillo", "SERVIPARTZ", "refrigeradores", "técnico"],
   icons: {
     icon: "/favicon.png",
   },
   openGraph: {
-    title: "Servipartz | Electrodomesticos",
+    title: "SERVIPARTZ | Electrodomésticos",
     description: "Encuéntranos, cotiza y agenda servicio técnico. Hermosillo, Sonora.",
-    images: [{ url: "/og-image.png", width: 1200, height: 1200, alt: "Servipartz" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 1200, alt: "SERVIPARTZ" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Servipartz | Electrodomesticos",
+    title: "SERVIPARTZ | Electrodomésticos",
     description: "Encuéntranos, cotiza y agenda servicio técnico. Hermosillo, Sonora.",
     images: ["/og-image.png"],
   },

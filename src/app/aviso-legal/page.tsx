@@ -3,7 +3,7 @@ import { ChevronLeft } from "lucide-react";
 import { SITE } from "@/lib/constants";
 
 export const metadata = {
-  title: "Aviso legal | Servipartz",
+  title: "Aviso legal | SERVIPARTZ",
   description: "Aviso legal e información sobre el responsable del sitio web.",
 };
 
