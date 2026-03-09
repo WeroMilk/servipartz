@@ -34,7 +34,7 @@ export function Footer() {
               />
             </span>
             <p className="text-sm text-white/90 max-w-xs">
-              Proveedor de repuestos de electrodomésticos en Hermosillo. Encuéntranos, cotiza y agenda servicio técnico.
+              Proveedores y técnicos de electrodomésticos en Hermosillo. Encuéntranos, cotiza y agenda servicio técnico.
             </p>
           </div>
 

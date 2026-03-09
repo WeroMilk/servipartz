@@ -55,7 +55,7 @@ export default function HomePage() {
               Reparación y servicio técnico
             </p>
             <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
-              Reparación de electrodomésticos en Hermosillo, Son.
+              Tu solución en electrodomésticos. Hermosillo, Son.
             </h1>
             <p className="mt-4 lg:mt-6 text-sm sm:text-base lg:text-lg text-white/85 leading-relaxed max-w-lg mx-auto lg:mx-0">
               Catálogo amplio, cotizaciones rápidas y servicio técnico a domicilio. Desde soldaduras hasta reparación y mantenimiento de refrigeraciones industriales.

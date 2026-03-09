@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: baseUrl ? new URL(baseUrl) : undefined,
   title: "Servipartz | Electrodomesticos",
   description:
-    "Proveedor de repuestos de electrodomésticos en Hermosillo. Catálogo amplio, cotizaciones, servicio técnico a domicilio. Refrigeradores, licuadoras, soldadura y más.",
+    "Proveedores y técnicos de electrodomésticos en Hermosillo. Catálogo amplio, cotizaciones, servicio técnico a domicilio. Refrigeradores, licuadoras, soldadura y más.",
   keywords: ["repuestos", "electrodomésticos", "Hermosillo", "Servipartz", "refrigeradores", "técnico"],
   icons: {
     icon: "/favicon.png",
