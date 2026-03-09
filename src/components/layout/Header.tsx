@@ -50,7 +50,18 @@ export function Header() {
               className="px-3.5 py-2 rounded-md text-slate-400 hover:text-white text-sm font-medium transition-colors"
             >
               {"labelKey" in link && link.labelKey === "cotizacion" ? (
-                <CotizationNavLink />
+                flashMenu ? (
+                  <motion.span
+                    className="inline-flex items-center"
+                    initial={{ color: "#fecaca" }}
+                    animate={{ color: ["#ef4444", "#fecaca", "#ef4444", "#fecaca", "#ef4444"] }}
+                    transition={{ duration: 2.5, times: [0, 0.25, 0.5, 0.75, 1] }}
+                  >
+                    <CotizationNavLink />
+                  </motion.span>
+                ) : (
+                  <CotizationNavLink />
+                )
               ) : (
                 "label" in link && link.label
               )}
@@ -106,7 +117,7 @@ export function Header() {
               transition={{ duration: 0.15 }}
               className="bg-black absolute inset-0"
             />
-            <motion.nav
+              <motion.nav
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -121,7 +132,18 @@ export function Header() {
                   className="px-4 py-2.5 rounded-md text-white hover:bg-white/10 font-medium text-sm transition-colors"
                 >
                   {"labelKey" in link && link.labelKey === "cotizacion" ? (
-                    <CotizationNavLink />
+                    flashMenu ? (
+                      <motion.span
+                        className="inline-flex items-center"
+                        initial={{ color: "#fecaca" }}
+                        animate={{ color: ["#ef4444", "#fecaca", "#ef4444", "#fecaca", "#ef4444"] }}
+                        transition={{ duration: 2.5, times: [0, 0.25, 0.5, 0.75, 1] }}
+                      >
+                        <CotizationNavLink />
+                      </motion.span>
+                    ) : (
+                      <CotizationNavLink />
+                    )
                   ) : (
                     "label" in link && link.label
                   )}
