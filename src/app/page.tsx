@@ -4,10 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Package, Calendar, FileText, MessageCircle, ArrowRight, Star, MapPin, Phone, Clock, RefreshCw } from "lucide-react";
-import { MAPS_LINK, SITE, SITE_COORDS, GOOGLE_REVIEWS_LINK } from "@/lib/constants";
+import { MAPS_LINK, SITE, GOOGLE_REVIEWS_LINK } from "@/lib/constants";
 
-// Iframe: usar coordenadas (q=lat,lng) para que el mapa quede centrado en el pin en desktop
-const MAPS_EMBED = `https://www.google.com/maps?q=${SITE_COORDS.lat},${SITE_COORDS.lng}&z=18&output=embed`;
+// Iframe: usar la dirección exacta del negocio para que el mapa muestre la ubicación correcta
+const MAPS_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(SITE.address)}&z=18&output=embed`;
 
 export default function HomePage() {
   return (
