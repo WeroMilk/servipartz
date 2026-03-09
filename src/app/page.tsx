@@ -156,7 +156,7 @@ export default function HomePage() {
       </section>
 
       {/* Visítanos + mapa — sección organizada y profesional, sin espacio sobrante */}
-      <section className="pt-14 sm:pt-20 pb-4 sm:pb-6 bg-slate-100/80">
+      <section className="pt-14 sm:pt-20 pb-12 sm:pb-16 bg-slate-100/80">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl bg-white shadow-lg shadow-slate-200/60 ring-1 ring-slate-200/80 overflow-hidden">
             <div className="grid lg:grid-cols-[1fr_1.4fr] gap-0 min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]">
