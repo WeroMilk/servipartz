@@ -155,8 +155,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Visítanos + mapa */}
-      <section className="py-16 sm:py-24 bg-slate-50/70">
+      {/* Visítanos + mapa — poco padding abajo para que el footer quede pegado */}
+      <section className="pt-16 sm:pt-24 pb-6 sm:pb-8 bg-slate-50/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-xl border border-slate-200/80 bg-white overflow-hidden">
             <div className="grid lg:grid-cols-5 gap-0 lg:items-stretch">
