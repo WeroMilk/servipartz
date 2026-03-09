@@ -1,6 +1,9 @@
 /** Ubicación correcta del negocio en Google Maps */
 export const MAPS_LINK = "https://maps.app.goo.gl/er7MTwpmCVtZFiAQ7";
 
+/** URL del sistema POS (punto de venta). Configurar en .env como NEXT_PUBLIC_POS_URL */
+export const POS_URL = process.env.NEXT_PUBLIC_POS_URL || "";
+
 /** Enlace para leer opiniones en Google */
 export const GOOGLE_REVIEWS_LINK = "https://www.google.com/search?q=servipartz+hermosillo+opiniones";
 

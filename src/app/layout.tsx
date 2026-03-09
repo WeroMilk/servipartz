@@ -46,7 +46,7 @@ export default function RootLayout({
     <html lang="es" className={plusJakarta.variable} data-scroll-behavior="smooth">
       <body className="antialiased min-h-[100svh] flex flex-col bg-slate-50 text-slate-900 font-sans overflow-x-hidden">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main>{children}</main>
         <Footer />
         <ChatbotWidget />
       </body>
