@@ -113,16 +113,40 @@ async function sendWithResend(options: SendEmailOptions): Promise<boolean> {
 
 /**
  * Envía un correo usando Gmail (si está configurado) o Resend.
- * Prioridad: Gmail > Resend.
+ * Prioridad: Gmail > Resend, con reintento automático:
+ * - Si Gmail está configurado pero falla, y Resend está disponible, se intenta con Resend.
  */
 export async function sendEmail(options: SendEmailOptions): Promise<boolean> {
-  const useGmail =
-    process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+  const hasGmail = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+  const hasResend = process.env.RESEND_API_KEY;
 
-  if (useGmail) {
-    return sendWithGmail(options);
+  // 1) Intentar con Gmail si está disponible
+  if (hasGmail) {
+    const okGmail = await sendWithGmail(options);
+    if (okGmail) return true;
+
+    // Si Gmail falla pero hay Resend configurado, probamos Resend como respaldo
+    if (hasResend) {
+      console.warn(
+        "[Email] Gmail falló, reintentando con Resend como respaldo."
+      );
+      return sendWithResend(options);
+    }
+
+    // Gmail estaba configurado pero falló, y no hay Resend
+    return false;
   }
-  return sendWithResend(options);
+
+  // 2) Si no hay Gmail, pero sí Resend
+  if (hasResend) {
+    return sendWithResend(options);
+  }
+
+  // 3) Ningún proveedor configurado
+  console.error(
+    "[Email] Ningún proveedor de correo configurado. Falta Gmail o Resend."
+  );
+  return false;
 }
 
 /** Escapa HTML para evitar inyección en correos (XSS) */
