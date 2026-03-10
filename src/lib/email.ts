@@ -24,9 +24,16 @@ const toArray = (x: string | string[]) => (Array.isArray(x) ? x : [x]);
 let gmailTransporter: Transporter | null = null;
 
 async function getGmailTransporter(): Promise<Transporter | null> {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
-  if (!user || !pass) return null;
+  const rawUser = process.env.GMAIL_USER;
+  const rawPass = process.env.GMAIL_APP_PASSWORD;
+  const user = rawUser?.trim();
+  const pass = rawPass?.trim();
+  if (!user || !pass) {
+    console.error(
+      "[Email Gmail] GMAIL_USER o GMAIL_APP_PASSWORD vacíos o sin configurar."
+    );
+    return null;
+  }
 
   if (gmailTransporter) return gmailTransporter;
 
@@ -46,7 +53,7 @@ async function sendWithGmail(options: SendEmailOptions): Promise<boolean> {
   const transporter = await getGmailTransporter();
   if (!transporter) return false;
 
-  const user = process.env.GMAIL_USER!;
+  const user = (process.env.GMAIL_USER || "").trim();
   const from = options.fromName
     ? `"${options.fromName}" <${user}>`
     : `"SERVIPARTZ" <${user}>`;
@@ -117,7 +124,9 @@ async function sendWithResend(options: SendEmailOptions): Promise<boolean> {
  * - Si Gmail está configurado pero falla, y Resend está disponible, se intenta con Resend.
  */
 export async function sendEmail(options: SendEmailOptions): Promise<boolean> {
-  const hasGmail = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+  const hasGmail =
+    !!process.env.GMAIL_USER?.trim() &&
+    !!process.env.GMAIL_APP_PASSWORD?.trim();
   const hasResend = process.env.RESEND_API_KEY;
 
   // 1) Intentar con Gmail si está disponible
