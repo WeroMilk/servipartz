@@ -3,7 +3,6 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { ChatbotWidget } from "@/components/chat/ChatbotWidget";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -48,7 +47,6 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        <ChatbotWidget />
       </body>
     </html>
   );
