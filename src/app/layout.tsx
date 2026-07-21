@@ -20,8 +20,21 @@ export const metadata: Metadata = {
   description:
     "Proveedores y técnicos de electrodomésticos en Hermosillo. Catálogo amplio, cotizaciones, servicio técnico a domicilio. Refrigeradores, licuadoras, soldadura y más.",
   keywords: ["repuestos", "electrodomésticos", "Hermosillo", "SERVIPARTZ", "refrigeradores", "técnico"],
+  applicationName: "SERVIPARTZ",
+  manifest: "/site.webmanifest",
+  themeColor: "#1e3a8a",
+  appleWebApp: {
+    capable: true,
+    title: "SERVIPARTZ",
+    statusBarStyle: "default",
+  },
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "192x192" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
   openGraph: {
     title: "SERVIPARTZ | Electrodomésticos",
